@@ -1,4 +1,4 @@
-class cheats {
+class CheatCodeEngine {
 	
 	constructor(){
 
