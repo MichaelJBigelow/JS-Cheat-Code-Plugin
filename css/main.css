@@ -8,6 +8,40 @@ h1,h2,h3,h4,h5,h6{
 	margin-top: 0;
 }
 
+/* VARIABLES */
+:root{
+	/* Material Design - Overlay Elevation Levels */
+	--md-color-00dp: #121212;
+	--md-color-01dp: #1e1e1e;
+	--md-color-02dp: #222222;
+	--md-color-03dp: #252525;
+	--md-color-04dp: #272727;
+	--md-color-06dp: #2c2c2c;
+	--md-color-08dp: #2e2e2e;
+	--md-color-12dp: #333333;
+	--md-color-16dp: #363636;
+	--md-color-24dp: #383838;
+
+	/* Color tool: https://material.io/resources/color/#!/?view.left=0&view.right=0&primary.color=3E2723&secondary.color=80DEEA */
+	--primary-color: #3e2723; /* Use with light-text-color */
+	--primary-light-color: #6a4f4b; /* Use with light-text-color */
+	--primary-dark-color: #1b0000; /* Use with light-text-color */
+	--secondary-color: #84e6f3; /* Use with dark-text-color */
+	--secondary-light-color: #b4ffff; /* Use with dark-text-color */
+	--secondary-dark-color: #4bacb8; /* Use with dark-text-color */
+	--light-text-color: #fff;
+	--faded-text-color: #cfcfcf;
+	--dark-text-color: #000;
+
+	--success-color: #8aea99;
+	--info-color: var(--secondary-color);
+	--warning-color: #f0cd64;
+	--error-color: #dd6974;
+}
+
 body{
-	background-color: #333;
+	background-color: var(--md-color-00dp);
+	color: var(--light-text-color);
+	font-size: 18px;
+	font-family: Verdana,sans-serif;
 }
