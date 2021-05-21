@@ -23,14 +23,19 @@ class CheatCodeEngine {
 
 	cheatCodeRecord( KeyboardEvent ){
 		// Store key press as key code
+		console.log( `CheatCodeEngine.cheatCodeRecord( ${KeyboardEvent.code} )` );
 	}
 
 	keypress( KeyboardEvent ){
 		// Process keystroke as part of a cheat code attempt
+		console.log( `CheatCodeEngine.keypress( ${KeyboardEvent.code} )` );
 	}
 
 	expireCheck(){
 		// Check if the cheat code was entered within the allotted time
+		console.log( `CheatCodeEngine.expireCheck()` );
 	}
 
 }
+
+const jsCheats = new CheatCodeEngine();
