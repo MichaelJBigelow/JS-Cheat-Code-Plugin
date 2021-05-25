@@ -23,13 +23,12 @@ class CheatCodeEngine {
 	}
 
 	cheatCodeRecord( KeyboardEvent ){
-		// Store key press as key code
-		console.log( `CheatCodeEngine.cheatCodeRecord( ${KeyboardEvent.code} )` );
+
+		// TODO: Store key press as key code
+
 	}
 
-	keypress( KeyboardEvent ){
-		// Process keystroke as part of a cheat code attempt
-		//console.log( `CheatCodeEngine.keypress( ${KeyboardEvent.code} )` );
+	keypress( KeyboardEvent ){ // Process keystroke as part of a cheat code attempt
 
 		this.expireCheck();
 
