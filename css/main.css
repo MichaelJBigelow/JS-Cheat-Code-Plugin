@@ -3,6 +3,7 @@
 	box-sizing: border-box;
 	color: inherit;
 	font-style: normal;
+	position: relative;
 }
 h1,h2,h3,h4,h5,h6{
 	margin-top: 0;
@@ -39,9 +40,48 @@ h1,h2,h3,h4,h5,h6{
 	--error-color: #dd6974;
 }
 
+html{
+	height: 100%;
+	width: 100%;
+}
+
 body{
 	background-color: var(--md-color-00dp);
 	color: var(--light-text-color);
-	font-size: 18px;
+	font-size: 20px;
 	font-family: Verdana,sans-serif;
+	height: 100%;
+	margin: 0;
+	width: 100%;
+}
+
+#container{
+	border: 1px solid #fff;
+	display: flex;
+	flex-direction: column;
+	height: 90%;
+	left: 5%;
+	/* margin: 5%; */
+	top: 5%;
+	width: 90%;
+}
+
+.debug-window{
+	flex-grow: 1;
+	height: 50%;
+}
+
+.debug-window:nth-child( n + 2 ){
+	border-top: 1px solid #fff;
+}
+
+.debug-label{
+	border-bottom: 1px solid #fff;
+	height: 40px;
+	line-height: 40px;
+	padding-left: 10px;
+}
+
+.cheat-message{
+	font-size: 18px;
 }
