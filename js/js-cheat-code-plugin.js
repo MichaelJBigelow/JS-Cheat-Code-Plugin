@@ -34,14 +34,7 @@ class CheatCodeEngine {
 
 		if( this.expired ){
 
-			this.cheatAttempt = ""; // Clear cheat attempt
-
-			// Reset time trackers
-			this.currentTime = new Date().getTime();
-			this.cheatStartTime = this.currentTime;
-			this.lastKeystrokeTime = this.currentTime;
-
-			this.expired = false;
+			this.reset();
 
 		}
 
@@ -61,8 +54,7 @@ class CheatCodeEngine {
 
 			if( this.cheatAttempt == this.cheatCodes[i].code ){ // Match found
 
-				this.cheatAttempt = "";
-				this.expired = true;
+				this.reset();
 				console.log( `Cheat Code Success: ${this.cheatCodes[i].id}` );
 
 				return;
@@ -87,6 +79,14 @@ class CheatCodeEngine {
 			this.expired = false;
 
 		}
+
+	}
+
+	reset(){ // Reset cheat attempt
+
+		this.cheatAttempt = "";
+		this.currentTime = new Date().getTime();
+		this.lastKeystrokeTime = this.currentTime;
 
 	}
 
