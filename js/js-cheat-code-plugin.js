@@ -31,6 +31,8 @@ class CheatCodeEngine {
 
 		this.expireCheck();
 
+		clearTimeout( this.keystrokeTimerRef );
+
 		if( this.expired ){
 
 			this.reset();
@@ -63,6 +65,7 @@ class CheatCodeEngine {
 		}
 
 		this.lastKeystrokeTime = new Date().getTime(); // Update keystroke time
+		this.keystrokeTimerRef = setTimeout( this.reset, this.maxCheatDelay );
 
 	}
 
