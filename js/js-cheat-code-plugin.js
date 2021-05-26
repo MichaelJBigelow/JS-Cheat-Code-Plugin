@@ -9,17 +9,16 @@ class CheatCodeEngine {
 				code: "ArrowUp,ArrowUp,ArrowDown,ArrowDown,ArrowLeft,ArrowRight,ArrowLeft,ArrowRight,KeyB,KeyA"
 			}
 		];
-		this.maxCheatEntryTime = 750; // Milliseconds allowed to enter a cheat code
-		this.expireCheckDelay  = 10; // Milliseconds between each cheat code expiration check
+		this.maxCheatDelay = 600; // Max milliseconds allowed between keystrokes during code entry
 
 		// GENERAL PROPERTIES
 		this.cheatAttempt      = ""; // Tracks user's cheat code entry. Stored as KeyboardEvent codes
 		this.recordedKeyCodes  = ""; // Tracks KeyboardEvent codes for cheat code creation
 		this.expired           = true; // Set true if cheat wasn't completed within the allotted time
 		this.keystrokeTimerRef = null; // Store interval id
-		this.cheatStartTime    = new Date().getTime();
-		this.currentTime       = this.cheatStartTime;
-		this.lastKeystrokeTime = this.cheatStartTime;
+		this.currentTime       = new Date().getTime();
+		this.lastKeystrokeTime = this.currentTime;
+
 	}
 
 	cheatCodeRecord( KeyboardEvent ){
@@ -63,14 +62,16 @@ class CheatCodeEngine {
 
 		}
 
+		this.lastKeystrokeTime = new Date().getTime(); // Update keystroke time
+
 	}
 
 	expireCheck(){ // Check if the cheat code was entered within the allotted time
 
 		this.currentTime = new Date().getTime();
-		let elapsedTime  = this.cheatStartTime - this.currentTime.toExponential;
+		let elapsedTime  = this.currentTime - this.lastKeystrokeTime;
 
-		if( elapsedTime > this.maxCheatEntryTime ){
+		if( elapsedTime > this.maxCheatDelay ){
 
 			this.expired = true;
 
