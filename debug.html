@@ -6,8 +6,14 @@
 		<meta name="author" content="Michael Bigelow">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link rel="stylesheet" href="css/main.css">
+
+		<script>
+			function updateDebugContent(){
+				document.querySelector('#cheat-attempt').innerHTML = jsCheats.cheatAttempt;
+			}
+		</script>
 	</head>
-	<body onkeyup="jsCheats.keypress( event )">
+	<body onkeyup="jsCheats.keypress( event );updateDebugContent()">
 		<div id="container">
 			<div class="debug-window">
 				<div class="debug-label">
