@@ -6,14 +6,8 @@
 		<meta name="author" content="Michael Bigelow">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link rel="stylesheet" href="css/main.css">
-
-		<script>
-			function updateDebugContent(){
-				document.querySelector('#cheat-attempt').innerHTML = jsCheats.cheatAttempt;
-			}
-		</script>
 	</head>
-	<body onkeyup="jsCheats.keypress( event );updateDebugContent()">
+	<body>
 		<div id="container">
 			<div class="debug-window">
 				<div class="debug-label">
@@ -32,6 +26,22 @@
 				</div>
 			</div>
 		</div>
-		<script src="js/js-cheat-code-plugin.js" async></script>
+		<script src="js/js-cheat-code-plugin.js"></script>
+		<script>
+			const cheatAttemptElement = document.querySelector( "#cheat-attempt" );
+			const cheatIdElement      = document.querySelector( "#cheat-id" );
+
+			jsCheats.addEventListener( "attempt", ( { detail } ) => {
+				cheatAttemptElement.textContent = detail.attempt;
+			} );
+
+			jsCheats.addEventListener( "reset", ( { detail } ) => {
+				cheatAttemptElement.textContent = detail.attempt;
+			} );
+
+			jsCheats.addEventListener( "success", ( { detail } ) => {
+				cheatIdElement.textContent = detail.id;
+			} );
+		</script>
 	</body>
 </html>
