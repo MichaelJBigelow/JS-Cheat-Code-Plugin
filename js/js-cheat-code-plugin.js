@@ -7,6 +7,12 @@
  *   "attempt" - a keystroke was added to the current attempt. detail: { attempt }
  *   "success" - a cheat code was entered. detail: { id, attempt }
  *   "reset"   - the current attempt was cleared. detail: { attempt }
+ *   "record"  - a keystroke was recorded while recording. detail: { attempt, recorded }
+ *
+ * Recording a new cheat code:
+ *   jsCheats.startRecording();
+ *   // ...user presses keys...
+ *   jsCheats.addCheatCode( { id: "MyCheat", code: jsCheats.stopRecording() } );
  */
 class CheatCodeEngine extends EventTarget {
 
@@ -23,6 +29,8 @@ class CheatCodeEngine extends EventTarget {
 	#lastKeystrokeTime = 0;
 	#timerId           = null;
 	#listener          = null; // AbortController for the keydown listener
+	#recordedKeys      = null; // KeyboardEvent codes captured while recording. null when not recording
+	#lastRecording     = []; // Keys from the last finished recording
 
 	constructor( {
 		cheatCodes    = CheatCodeEngine.DEFAULT_CHEAT_CODES,
@@ -64,6 +72,19 @@ class CheatCodeEngine extends EventTarget {
 	get listening(){
 
 		return this.#listener !== null;
+
+	}
+
+	get recording(){
+
+		return this.#recordedKeys !== null;
+
+	}
+
+	// The keys captured by the current (or last) recording as a comma separated string of KeyboardEvent codes
+	get recordedKeyCodes(){
+
+		return ( this.#recordedKeys ?? this.#lastRecording ).join( "," );
 
 	}
 
@@ -125,7 +146,15 @@ class CheatCodeEngine extends EventTarget {
 
 	keypress( event ){ // Process keystroke as part of a cheat code attempt. Returns the matched cheat id, if any
 
-		if( !event.code || event.repeat || ( this.ignoreInputs && this.#isEditable( event.target ) ) ){
+		if( this.recording ){
+
+			this.cheatCodeRecord( event );
+
+			return null;
+
+		}
+
+		if( this.#isIgnored( event ) ){
 
 			return null;
 
@@ -185,9 +214,42 @@ class CheatCodeEngine extends EventTarget {
 
 	}
 
-	cheatCodeRecord( event ){
+	startRecording(){ // Capture keystrokes for a new cheat code instead of matching them
 
-		// TODO: Store key press as key code
+		this.reset();
+		this.#recordedKeys = [];
+
+		return this;
+
+	}
+
+	stopRecording(){ // Stop capturing keystrokes. Returns the recorded KeyboardEvent codes, ready for addCheatCode()
+
+		if( !this.recording ){
+
+			return [];
+
+		}
+
+		this.#lastRecording = this.#recordedKeys;
+		this.#recordedKeys  = null;
+
+		return [ ...this.#lastRecording ];
+
+	}
+
+	cheatCodeRecord( event ){ // Store key press as key code. Returns the keys recorded so far, or null if the keystroke was skipped
+
+		if( !this.recording || this.#isIgnored( event ) ){
+
+			return null;
+
+		}
+
+		this.#recordedKeys.push( event.code );
+		this.#emit( "record", { recorded: this.recordedKeyCodes } );
+
+		return [ ...this.#recordedKeys ];
 
 	}
 
@@ -208,6 +270,12 @@ class CheatCodeEngine extends EventTarget {
 			this.#attempt.splice( 0, this.#attempt.length - this.#longestCode );
 
 		}
+
+	}
+
+	#isIgnored( event ){
+
+		return !event.code || event.repeat || ( this.ignoreInputs && this.#isEditable( event.target ) );
 
 	}
 

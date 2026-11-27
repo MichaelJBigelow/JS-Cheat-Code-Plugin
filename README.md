@@ -18,9 +18,21 @@ Include the script. It creates a global `jsCheats` engine that listens for `keyd
 </script>
 ```
 
-Events: `attempt` (a key was added), `success` (a code was entered, `detail.id`) and `reset` (the attempt was cleared). Each event's `detail.attempt` holds the current attempt.
+Events: `attempt` (a key was added), `success` (a code was entered, `detail.id`), `reset` (the attempt was cleared) and `record` (a key was recorded, `detail.recorded`). Each event's `detail.attempt` holds the current attempt.
 
-Methods: `addCheatCode()`, `removeCheatCode( id )`, `start()`, `stop()` and `reset()`.
+Methods: `addCheatCode()`, `removeCheatCode( id )`, `start()`, `stop()`, `reset()`, `startRecording()` and `stopRecording()`.
+
+### Recording a cheat code
+
+While recording, key presses are stored instead of being matched against existing codes. `stopRecording()` returns the recorded keys, ready to pass to `addCheatCode()`. `jsCheats.recordedKeyCodes` holds them as a comma separated string.
+
+```js
+jsCheats.startRecording();
+// ...the user presses their keys...
+jsCheats.addCheatCode( { id: "MyCheat", code: jsCheats.stopRecording() } );
+```
+
+The debug page has a Record button that does this and saves each recording as a new code.
 
 To configure your own engine, create one with options:
 
