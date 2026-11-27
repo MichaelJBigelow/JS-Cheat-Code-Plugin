@@ -102,7 +102,7 @@
 
 		const codes = jsCheats.cheatCodes;
 
-		return codes.find( ( { id } ) => id === "Contra" ) ?? codes[ 0 ];
+		return codes.find( ( { id } ) => id === "Contra - 30 Lives" ) ?? codes[ 0 ];
 
 	}
 
