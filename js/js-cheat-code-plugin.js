@@ -18,7 +18,7 @@ class CheatCodeEngine extends EventTarget {
 
 	static DEFAULT_CHEAT_CODES = [
 		{
-			id: "Contra",
+			id: "Contra - 30 Lives",
 			code: [ "ArrowUp", "ArrowUp", "ArrowDown", "ArrowDown", "ArrowLeft", "ArrowRight", "ArrowLeft", "ArrowRight", "KeyB", "KeyA" ]
 		}
 	];

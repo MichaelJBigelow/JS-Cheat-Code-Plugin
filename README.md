@@ -38,7 +38,7 @@ To configure your own engine, create one with options:
 
 ```js
 const cheats = new CheatCodeEngine( {
-	cheatCodes: [ { id: "Contra", code: "ArrowUp,ArrowUp,ArrowDown,ArrowDown,ArrowLeft,ArrowRight,ArrowLeft,ArrowRight,KeyB,KeyA" } ],
+	cheatCodes: [ { id: "Contra - 30 Lives", code: "ArrowUp,ArrowUp,ArrowDown,ArrowDown,ArrowLeft,ArrowRight,ArrowLeft,ArrowRight,KeyB,KeyA" } ],
 	maxCheatDelay: 600, // Max milliseconds between keystrokes
 	target: document, // Element to listen on
 	ignoreInputs: true, // Ignore typing in inputs, textareas and contenteditable elements
