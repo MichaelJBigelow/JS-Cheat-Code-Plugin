@@ -173,7 +173,7 @@ body{
 	grid-template-columns: repeat( 12, minmax( 0, 1fr ) );
 	margin: 0 auto;
 	max-width: 1180px;
-	padding: 48px 28px 120px;
+	padding: 48px 28px 56px;
 }
 
 .card--hero,
@@ -617,6 +617,28 @@ body{
 	padding-top: 4px;
 }
 
+/* DISCLAIMER */
+.disclaimer{
+	--frame: var( --md-sys-color-outline-variant );
+	background-color: var( --md-sys-color-surface );
+	box-shadow: var( --pixel-frame );
+	color: var( --md-sys-color-on-surface-variant );
+	font-size: 18px;
+	margin: 0 auto 48px;
+	max-width: calc( 1180px - 56px );
+	padding: 16px 20px;
+	width: calc( 100% - 56px );
+}
+
+.disclaimer strong{
+	color: var( --md-sys-color-primary );
+	font-family: var( --font-display );
+	font-size: 10px;
+	font-weight: normal;
+	margin-right: 6px;
+	text-transform: uppercase;
+}
+
 /* SNACKBAR */
 .snackbar{
 	--frame: #000;
@@ -679,7 +701,7 @@ body{
 	.layout{
 		gap: 32px;
 		grid-template-columns: minmax( 0, 1fr );
-		padding: 32px 20px 96px;
+		padding: 32px 20px 48px;
 	}
 
 	.layout > .card{
@@ -702,6 +724,10 @@ body{
 
 	.code-list{
 		grid-template-columns: minmax( 0, 1fr );
+	}
+
+	.disclaimer{
+		width: calc( 100% - 40px );
 	}
 }
 
