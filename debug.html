@@ -1,88 +1,101 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 	<head>
 		<meta charset="UTF-8">
-		<title>Debug | JS Cheat Code Plugin</title>
+		<title>Demo | JS Cheat Code Plugin</title>
 		<meta name="author" content="Michael Bigelow">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="theme-color" content="#0c0c20">
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap">
 		<link rel="stylesheet" href="css/main.css">
 	</head>
 	<body>
-		<div id="container">
-			<div class="debug-window">
-				<div class="debug-label">
-					Cheat Attempt
-				</div>
-				<div id="cheat-attempt" class="debug-content">
-
-				</div>
-			</div>
-			<div class="debug-window">
-				<div class="debug-label">
-					Cheat ID
-				</div>
-				<div id="cheat-id" class="debug-content">
-
-				</div>
-			</div>
-			<div class="debug-window">
-				<div class="debug-label">
-					Recorded Keys
-					<button id="record-button" type="button" class="record-button">Record</button>
-				</div>
-				<div id="recorded-keys" class="debug-content">
-
-				</div>
-			</div>
+		<div class="scene" aria-hidden="true">
+			<canvas id="scene"></canvas>
 		</div>
+
+		<header class="top-app-bar">
+			<svg class="top-app-bar__logo" viewBox="0 0 16 10" aria-hidden="true">
+				<path class="logo-body" d="M2 1h12v1h1v1h1v5h-1v1h-1v1H2V9H1V8H0V3h1V2h1z"/>
+				<path class="logo-detail" d="M4 3h1v1h1v1H5v1H4V5H3V4h1zM10 5h1v1h-1zM12 4h1v1h-1zM7 3h2v1H7z"/>
+			</svg>
+			<span class="top-app-bar__title">JS Cheat Code Plugin</span>
+			<span class="top-app-bar__badge">Demo</span>
+			<div class="score" aria-label="Cheats unlocked this session">
+				<span class="score__label">Unlocked</span>
+				<span id="score-value" class="score__value">00</span>
+			</div>
+		</header>
+
+		<main class="layout">
+			<section class="card card--hero" aria-labelledby="hero-title">
+				<div class="hero__text">
+					<p class="overline">Player 1 &middot; Ready</p>
+					<h1 id="hero-title" class="hero__title">Enter the <span>code</span></h1>
+					<div id="hero-keys" class="key-row key-row--large" aria-label="The classic code"></div>
+					<p class="hero__hint">
+						Type it on your keyboard, or tap the pad. Keys more than
+						<span id="max-delay">600</span>&nbsp;ms apart start a new attempt.
+					</p>
+				</div>
+
+				<div class="pad" aria-label="On-screen controller">
+					<div class="dpad">
+						<button type="button" class="dpad__button dpad__button--up" data-code="ArrowUp" data-key="ArrowUp" tabindex="-1" aria-label="Up"></button>
+						<button type="button" class="dpad__button dpad__button--left" data-code="ArrowLeft" data-key="ArrowLeft" tabindex="-1" aria-label="Left"></button>
+						<span class="dpad__center"></span>
+						<button type="button" class="dpad__button dpad__button--right" data-code="ArrowRight" data-key="ArrowRight" tabindex="-1" aria-label="Right"></button>
+						<button type="button" class="dpad__button dpad__button--down" data-code="ArrowDown" data-key="ArrowDown" tabindex="-1" aria-label="Down"></button>
+					</div>
+					<div class="face-buttons">
+						<div class="face-button-wrap">
+							<button type="button" class="face-button" data-code="KeyB" data-key="b" tabindex="-1" aria-label="B">B</button>
+						</div>
+						<div class="face-button-wrap">
+							<button type="button" class="face-button" data-code="KeyA" data-key="a" tabindex="-1" aria-label="A">A</button>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<section class="card card--attempt" aria-labelledby="attempt-title">
+				<h2 id="attempt-title" class="card__title">Cheat Attempt</h2>
+				<p class="card__supporting">The keys you've pressed so far.</p>
+				<div id="cheat-attempt" class="key-row" data-empty="Press any key..."></div>
+			</section>
+
+			<section id="unlocked-card" class="card card--unlocked" aria-labelledby="unlocked-title">
+				<h2 id="unlocked-title" class="card__title">Cheat ID</h2>
+				<p class="card__supporting">The last code you unlocked.</p>
+				<div id="cheat-id" class="unlocked-id" aria-live="polite" data-empty="None yet"></div>
+				<p class="card__footnote"><span id="unlock-total">0</span> unlocked this session</p>
+			</section>
+
+			<section class="card card--recorder" aria-labelledby="recorder-title">
+				<div class="card__header">
+					<h2 id="recorder-title" class="card__title">Recorded Keys</h2>
+					<button id="record-button" type="button" class="button button--record">
+						<span class="button__icon" aria-hidden="true"></span>
+						<span class="button__label">Record</span>
+					</button>
+				</div>
+				<p id="recorder-status" class="card__supporting">Press Record, type a sequence, then press Stop to save it as a new code.</p>
+				<div id="recorded-keys" class="key-row" data-empty="Nothing recorded"></div>
+			</section>
+
+			<section class="card card--codes" aria-labelledby="codes-title">
+				<h2 id="codes-title" class="card__title">Registered Codes</h2>
+				<p class="card__supporting">Every code the engine is listening for, lit up as you enter it.</p>
+				<ul id="code-list" class="code-list"></ul>
+			</section>
+		</main>
+
+		<div id="snackbar" class="snackbar" role="status" aria-live="polite"></div>
+
 		<script src="js/js-cheat-code-plugin.js"></script>
-		<script>
-			const cheatAttemptElement = document.querySelector( "#cheat-attempt" );
-			const cheatIdElement      = document.querySelector( "#cheat-id" );
-
-			jsCheats.addEventListener( "attempt", ( { detail } ) => {
-				cheatAttemptElement.textContent = detail.attempt;
-			} );
-
-			jsCheats.addEventListener( "reset", ( { detail } ) => {
-				cheatAttemptElement.textContent = detail.attempt;
-			} );
-
-			jsCheats.addEventListener( "success", ( { detail } ) => {
-				cheatIdElement.textContent = detail.id;
-			} );
-
-			// Recording: press Record, type a sequence, press Stop to save it as a new cheat code
-			const recordButton        = document.querySelector( "#record-button" );
-			const recordedKeysElement = document.querySelector( "#recorded-keys" );
-			let customCheatCount      = 0;
-
-			jsCheats.addEventListener( "record", ( { detail } ) => {
-				recordedKeysElement.textContent = detail.recorded;
-			} );
-
-			recordButton.addEventListener( "click", () => {
-				recordButton.blur(); // Keep Space/Enter from pressing the button while recording
-
-				if( !jsCheats.recording ){
-					jsCheats.startRecording();
-					recordButton.textContent        = "Stop";
-					recordedKeysElement.textContent = "";
-					return;
-				}
-
-				const keys = jsCheats.stopRecording();
-				recordButton.textContent = "Record";
-
-				if( keys.length === 0 ){
-					recordedKeysElement.textContent = "Nothing recorded";
-					return;
-				}
-
-				const id = `Custom ${++customCheatCount}`;
-				jsCheats.addCheatCode( { id, code: keys } );
-				recordedKeysElement.textContent = `Saved "${id}": ${keys.join( "," )}`;
-			} );
-		</script>
+		<script src="js/demo-scene.js"></script>
+		<script src="js/demo.js"></script>
 	</body>
 </html>
