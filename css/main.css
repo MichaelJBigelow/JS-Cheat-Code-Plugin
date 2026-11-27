@@ -85,3 +85,15 @@ body{
 .cheat-message{
 	font-size: 18px;
 }
+
+.record-button{
+	background-color: var(--secondary-color);
+	border: none;
+	border-radius: 4px;
+	color: var(--dark-text-color);
+	cursor: pointer;
+	font: inherit;
+	font-size: 16px;
+	margin-left: 10px;
+	padding: 2px 12px;
+}
